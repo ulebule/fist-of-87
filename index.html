@@ -1010,6 +1010,7 @@ nmInput.addEventListener('keydown',e=>{ e.stopPropagation();
 nmInput.addEventListener('keyup',e=>e.stopPropagation());
 
 /* ---------------- chrome buttons ---------------- */
+const tb=document.getElementById('tb');
 const muteBtn=document.getElementById('muteBtn'), langBtn=document.getElementById('langBtn'),
       nameBtn=document.getElementById('nameBtn');
 function syncChrome(){
@@ -1313,6 +1314,11 @@ function frame(ts){
   const N=2, h=dt/N;
   for(let i=0;i<N;i++) update(h);
   render();
+  /* These sat right on top of the opponent's energy bar — worst of all with the
+     phone held sideways, where the cabinet is at its widest. They belong to the
+     menus, so during a fight they go away. */
+  const showChrome = (state!=='fight' && state!=='bonus');
+  tb.style.display = showChrome? 'flex':'none';
   padhint.classList.toggle('on', touchOnly && (state==='title'||state==='fight'&&fightPhase==='intro'));
 }
 
