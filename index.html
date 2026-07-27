@@ -67,9 +67,19 @@
   #ovb button{font-family:"Courier New",monospace;font-weight:bold;font-size:min(3vw,15px);
     padding:9px 20px;background:#2a2a55;color:#fff;border:2px solid #5a5ab5;cursor:pointer;border-radius:4px;}
   @media (pointer:coarse){#ovb button{min-height:48px;padding:0 26px;font-size:16px;}}
+
+  /* The arena is 8:5, so a phone held upright leaves it a thin strip. Say so
+     rather than letting someone try to fight in a letterbox. */
+  #rotate{display:none;position:fixed;left:0;right:0;bottom:7%;z-index:20;
+    text-align:center;color:#ffd23b;pointer-events:none;
+    font:bold min(4.4vw,17px)/1.5 "Courier New",monospace;text-shadow:0 2px 0 #000;}
+  #rotate span{display:inline-block;padding:10px 16px;border:2px solid #7a5a10;
+    background:rgba(0,0,0,.72);border-radius:8px;}
+  @media (orientation:portrait) and (pointer:coarse){#rotate{display:block;}}
 </style>
 </head>
 <body>
+<div id="rotate"><span></span></div>
 <div id="wrap"><div id="stage">
   <canvas id="c" width="640" height="400"></canvas>
   <div id="crt"></div>
@@ -1003,6 +1013,8 @@ nmInput.addEventListener('keyup',e=>e.stopPropagation());
 const muteBtn=document.getElementById('muteBtn'), langBtn=document.getElementById('langBtn'),
       nameBtn=document.getElementById('nameBtn');
 function syncChrome(){
+  const rot=document.querySelector('#rotate span');
+  if(rot) rot.textContent='\u21BB  '+T('rotate');
   langBtn.textContent=lang.toUpperCase();
   muteBtn.textContent=muted?'♪̸':'♪';
   document.getElementById('hintL').textContent=T('touchL');
